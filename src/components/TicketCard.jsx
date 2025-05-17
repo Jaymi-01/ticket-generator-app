@@ -112,13 +112,13 @@ const TicketCard = ({ totalSteps = 3 }) => {
           <select
             value={numberOfTickets}
             onChange={handleNumberOfTicketsChange}
-            className="appearance-none bg-transparent border border-gray-700 text-white rounded-md p-2 w-full focus:outline-none pr-8"
+            className="appearance-none bg-primary border border-border2 text-white rounded-md p-2 w-full focus:outline-none pr-8"
           >
             <option value={1}>1</option>
             <option value={2}>2</option>
             <option value={3}>3</option>
           </select>
-          <div className={`pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-300 ${getPaddingClass()}`}>
+          <div className={`pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white ${getPaddingClass()}`}>
             <img src={dropdown} alt=""  />
           </div>
         </div>
