@@ -3,9 +3,15 @@ import React, { useState, useEffect } from "react";
 const TicketCard = ({ totalSteps = 3 }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [progress, setProgress] = useState(0);
+  const [selectedTicket, setSelectedTicket] = useState(null);
+
+  const ticketTypes = [
+    { id: "free", name: "Free", description: "REGULAR ACCESS", availability: "20/52" },
+    { id: "vip", name: "$150", description: "VIP ACCESS", availability: "20/52" },
+    { id: "vvip", name: "$350", description: "VVIP ACCESS", availability: "20/52" },
+  ];
 
   useEffect(() => {
-    // Calculate progress whenever currentStep changes
     const newProgress = ((currentStep - 1) / (totalSteps - 1)) * 100;
     setProgress(isNaN(newProgress) ? 0 : newProgress);
   }, [currentStep, totalSteps]);
@@ -20,6 +26,11 @@ const TicketCard = ({ totalSteps = 3 }) => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
     }
+  };
+
+  const handleSelectTicket = (ticketId) => {
+    setSelectedTicket(ticketId);
+    console.log(`Selected ticket: ${ticketId}`);
   };
 
   return (
@@ -41,7 +52,7 @@ const TicketCard = ({ totalSteps = 3 }) => {
           style={{ width: `${progress}%` }}
         />
       </div>
-      <div className="border border-border rounded-3xl mt-5 p-3 text-center">
+      <div className="border border-border2 rounded-3xl mt-5 p-3 text-center">
         <h1 className="font-secondary text-white text-5xl md:text-8xl">
           Techember Fest "25
         </h1>
@@ -55,8 +66,23 @@ const TicketCard = ({ totalSteps = 3 }) => {
         </div>
       </div>
       <div className="bg-bar rounded-md h-1 w-full my-8"></div>
-      div 
+      <div className="text-white ">Select Ticket Type</div>
 
+      <div className="border border-border2 p-4 rounded-2xl mt-5 flex flex-col gap-y-6 md:gap-y-0 md:flex-row md:gap-x-6">
+        {ticketTypes.map((ticket) => (
+          <button
+            key={ticket.id}
+            onClick={() => handleSelectTicket(ticket.id)}
+            className={`border border-border text-white p-4 rounded-2xl w-full text-left focus:outline-none focus:ring-2 focus:ring-border focus:bg-border ${
+              selectedTicket === ticket.id ? "bg-primary" : ""
+            }`}
+          >
+            <div className="text-2xl">{ticket.name}</div>
+            <div className="mt-3 opacity-80">{ticket.description}</div>
+            <div className="mt-1 opacity-60">{ticket.availability}</div>
+          </button>
+        ))}
+      </div>
 
       <div className="flex justify-between mt-10">
         <button
@@ -68,7 +94,7 @@ const TicketCard = ({ totalSteps = 3 }) => {
         </button>
         <button
           onClick={handleNext}
-          disabled={currentStep === totalSteps}
+          disabled={currentStep === totalSteps || !selectedTicket}
           className="bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         >
           Next
