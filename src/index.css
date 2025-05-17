@@ -15,6 +15,7 @@ body{
 @theme{
     --color-header: #05252c66;
     --color-border: #197686;
+    --color-border2: #07363e;
     --color-bar: #0E464F;
     --color-progress: #24A0B5;
     --font-header: Nanum Myeongjo;
