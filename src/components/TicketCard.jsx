@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import dropdown from '../assets/chevron-down.svg'
 
 const TicketCard = ({ totalSteps = 3 }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [progress, setProgress] = useState(0);
   const [selectedTicket, setSelectedTicket] = useState(null);
+  const [numberOfTickets, setNumberOfTickets] = useState(1);
 
   const ticketTypes = [
     { id: "free", name: "Free", description: "REGULAR ACCESS", availability: "20/52" },
@@ -31,6 +33,26 @@ const TicketCard = ({ totalSteps = 3 }) => {
   const handleSelectTicket = (ticketId) => {
     setSelectedTicket(ticketId);
     console.log(`Selected ticket: ${ticketId}`);
+  };
+
+  const handleNumberOfTicketsChange = (event) => {
+    const value = parseInt(event.target.value, 10);
+    if (!isNaN(value) && value >= 1 && value <= 3) {
+      setNumberOfTickets(value);
+    }
+  };
+
+  const getPaddingClass = () => {
+    switch (numberOfTickets) {
+      case 1:
+        return 'p-1';
+      case 2:
+        return 'p-2';
+      case 3:
+        return 'p-3';
+      default:
+        return 'p-1'; // Default padding
+    }
   };
 
   return (
@@ -82,6 +104,24 @@ const TicketCard = ({ totalSteps = 3 }) => {
             <div className="mt-1 opacity-60">{ticket.availability}</div>
           </button>
         ))}
+      </div>
+
+      <div className="mt-6">
+        <div className="text-white mb-2">Number Of Tickets</div>
+        <div className="relative">
+          <select
+            value={numberOfTickets}
+            onChange={handleNumberOfTicketsChange}
+            className="appearance-none bg-transparent border border-gray-700 text-white rounded-md p-2 w-full focus:outline-none pr-8"
+          >
+            <option value={1}>1</option>
+            <option value={2}>2</option>
+            <option value={3}>3</option>
+          </select>
+          <div className={`pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-300 ${getPaddingClass()}`}>
+            <img src={dropdown} alt=""  />
+          </div>
+        </div>
       </div>
 
       <div className="flex justify-between mt-10">
